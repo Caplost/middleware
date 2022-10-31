@@ -39,6 +39,7 @@ func (u *MiddlewareRepository)InitTable() error  {
 //根据ID查找Middleware信息
 func (u *MiddlewareRepository)FindMiddlewareByID(middlewareID int64) (middleware *model.Middleware,err error) {
 	middleware = &model.Middleware{}
+	//要多个则添加 Preload
 	return middleware, u.mysqlDb.First(middleware,middlewareID).Error
 }
 
@@ -96,10 +97,12 @@ func (u *MiddlewareRepository) UpdateMiddleware(middleware *model.Middleware) er
 
 //获取结果集
 func (u *MiddlewareRepository) FindAll()(middlewareAll []model.Middleware,err error) {
+	//要多个则添加 Preload
 	return middlewareAll, u.mysqlDb.Find(&middlewareAll).Error
 }
 
 func (u *MiddlewareRepository) FindAllByTypeID(typeID int64) (middlewareAll []model.Middleware, err error) {
+	//要多个则添加 Preload
 	return middlewareAll,u.mysqlDb.Where("middle_type_id = ?",typeID).Find(&middlewareAll).Error
 }
 
